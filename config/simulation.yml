@@ -1,0 +1,4 @@
+simulation_parameters:
+  max_players: 4
+  match_duration_minutes: 30
+  court_type: "clay"

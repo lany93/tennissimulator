@@ -13,3 +13,7 @@ wheels/
 *_cache
 *.cache
 cache/
+
+
+# Ignore debugging settings
+.vscode/

@@ -1,6 +1,7 @@
 import logging
 
-from config import ConfigManager
+from config.read import ConfigManager
+
 
 # Constants
 CONFIG_FOLDER_PATH = "config"
@@ -13,8 +14,6 @@ def main():
     config = ConfigManager(CONFIG_FOLDER_PATH)
     config.load_config()
     print(config.get())
-    # for key, value in config.get().items():
-    #     print(f"{key}: {value}")
     print("Hello from tennis-simulator!")
 
 

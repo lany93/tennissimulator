@@ -3,6 +3,7 @@ import os
 import yaml
 from pathlib import Path
 from typing import Any, Dict, List
+from pydantic import ValidationError
 
 
 logger = logging.getLogger("config")
@@ -48,8 +49,12 @@ class ConfigManager:
         if not merged_config:
             raise ValueError("No configuration files were successfully loaded")
 
-        logger.info(f"Loading configuration from {self.config_folder_path}")
-        self._config = merged_config
+        # Validate with Pydantic
+        try:
+            self._config = merged_config
+            logger.info(f"Loading configuration from {self.config_folder_path}")
+        except ValidationError as e:
+            logger.error(f"Configuration validation error: {e}")
 
     def _deep_merge(
         self, base: Dict[str, Any], update: Dict[str, Any]
@@ -71,6 +76,6 @@ class ConfigManager:
         """Get the loaded configuration"""
         if self._config is None:
             raise RuntimeError(
-                "Configuration not loaded. Call load_multiple() or load_by_environment() first."
+                "Configuration not loaded. Please call load_config() first."
             )
         return self._config
