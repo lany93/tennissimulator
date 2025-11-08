@@ -17,3 +17,10 @@ dependencies = [
 members = [
     "yaml",
 ]
+
+# Tell uv to find package root folder
+[tool.setuptools]
+packages = [
+    "dashboard", 
+    "src"
+]
