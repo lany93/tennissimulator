@@ -1,5 +1,6 @@
 """Tests for tennis scoring module."""
 
+from typing import List
 import pytest
 
 from src.tennis_simulator.tennis_scoring.tennis_score import TennisScore
@@ -17,21 +18,38 @@ def tennis_score():
         "player_2_tiebreak_points": 0,
         "player_1_sets": [],
         "player_2_sets": [],
+        "player_1_sets_won": 0,
+        "player_2_sets_won": 0,
     }
     return TennisScore(score=score)
 
 
 @pytest.mark.parametrize(
-    "player, expected_score",
+    "player, score, expected_score",
     [
-        pytest.param("player_1", 15, id="Update Score Player 1"),
-        pytest.param("player_2", 15, id="Update Score Player 2"),
+        pytest.param("player_1", [0, 0], [15, 0], id="Update Score Player 1"),
+        pytest.param("player_2", [0, 0], [0, 15], id="Update Score Player 2"),
+        pytest.param("player_2", [30, 40], [0, 0], id="Update Score Player 2 Game"),
+        pytest.param("player_1", [40, 30], [0, 0], id="Update Score Player 1 Game"),
+        pytest.param(
+            "player_1",
+            [40, 40],
+            ["Advantage", 40],
+            id="Update Score Player 1 Advantage",
+        ),
     ],
 )
-def test_update_score(player: str, expected_score: int, tennis_score: TennisScore):
+def test_update_score(
+    player: str, score: List[int], expected_score: List[int], tennis_score: TennisScore
+):
     """Test updating score for player."""
+    tennis_score.player_1_score_index = tennis_score._score_to_index(score[0])
+    tennis_score.player_2_score_index = tennis_score._score_to_index(score[1])
+
+    # Update score for the specified player
     tennis_score._update_score(player)
-    assert tennis_score.score[player] == expected_score
+    assert tennis_score.score["player_1"] == expected_score[0]
+    assert tennis_score.score["player_2"] == expected_score[1]
 
 
 @pytest.mark.parametrize(
