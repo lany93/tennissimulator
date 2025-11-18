@@ -1,3 +1,5 @@
+"""Session state utilities for the dashboard."""
+
 import streamlit as st
 
 

@@ -1,7 +1,7 @@
 import logging
 import random
 from typing import Any
-from tennis_simulator.tennis_scoring.tennis_score import TennisScore
+from src.tennis_simulator.tennis_scoring.tennis_score import TennisScore
 
 
 class simulator:

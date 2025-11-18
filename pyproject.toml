@@ -11,6 +11,7 @@ dependencies = [
     "pytest>=8.4.2",
     "ruff>=0.14.3",
     "streamlit>=1.51.0",
+    "types-pyyaml>=6.0.12.20250915",
 ]
 
 [tool.uv.workspace]
@@ -20,7 +21,4 @@ members = [
 
 # Tell uv to find package root folder
 [tool.setuptools]
-packages = [
-    "dashboard", 
-    "src"
-]
+packages = {find = {where = ["src"]}}

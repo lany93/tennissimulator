@@ -17,4 +17,4 @@ setup: venv
 	uv pip install -e .
 
 app:
-	${PYTHON} -m streamlit run dashboard/main.py
+	${PYTHON} -m streamlit run src/dashboard/main.py

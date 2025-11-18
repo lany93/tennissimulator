@@ -1,6 +1,6 @@
 import logging
 
-from tennis_simulator.simulation.simulator import simulator
+from src.tennis_simulator.simulation.simulator import simulator
 
 
 # Constants

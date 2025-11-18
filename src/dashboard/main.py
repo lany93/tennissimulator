@@ -1,5 +1,5 @@
 import streamlit as st
-from dashboard.util.session_state import initialize_session_state
+from src.dashboard.util.session_state import initialize_session_state
 
 st.set_page_config(
     page_title="Hello",

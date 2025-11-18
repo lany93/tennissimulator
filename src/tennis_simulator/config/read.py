@@ -22,7 +22,7 @@ class ConfigManager:
             return
 
         # Init merged config
-        merged_config = {}
+        merged_config: dict[Any, Any] = {}
 
         for config_file in self.config_files:
             config_path = self.config_folder_path / config_file
@@ -34,7 +34,7 @@ class ConfigManager:
             # Load YAML file if possible
             try:
                 with open(config_path, "r") as file:
-                    config_data = yaml.safe_load(file) or {}
+                    config_data = yaml.safe_load(file) or {}  # type: ignore[attr-defined]
                 logger.info(f"Successfully loaded config file: {config_path}")
 
                 if merge_strategy == "deep":
@@ -42,7 +42,7 @@ class ConfigManager:
                 else:
                     merged_config.update(config_data)
 
-            except yaml.YAMLError as e:
+            except yaml.YAMLError as e:  # type: ignore[attr-defined]
                 raise ValueError(f"Error parsing YAML file {config_path}: {e}")
 
         # Ensure at least one config was loaded
