@@ -1,6 +1,6 @@
 import logging
 
-from src.tennis_simulator.simulation.simulator import simulator
+from src.tennis_simulator.simulation.simulator import Simulator
 
 
 # Constants
@@ -23,7 +23,7 @@ def main():
     # logging.info(f"Winner: {tennis_score.winner}.")
     # logging.info(f"Final Score: {tennis_score.score}.")
 
-    simulation = simulator(WINRATE_PLAYER_1)
+    simulation = Simulator(WINRATE_PLAYER_1)
     simulation.run_simulation(number_of_simulations=10000)
     print(simulation.statistics)
 

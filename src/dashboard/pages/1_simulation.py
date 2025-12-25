@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from src.tennis_simulator.simulation.simulator import simulator
+from src.tennis_simulator.simulation.simulator import Simulator
 
 
 st.title("Tennis Match Simulator")
@@ -25,8 +25,8 @@ num_simulations = st.number_input(
 # Button to run simulation
 if st.button("Run Simulation"):
     with st.spinner("Running simulations..."):
-        # Initialize and run the simulator
-        simulation = simulator(winrate_player_1=st.session_state.p1_point_win_rate)
+        # Initialize and run the Simulator
+        simulation = Simulator(winrate_player_1=st.session_state.p1_point_win_rate)
         simulation.run_simulation(number_of_simulations=num_simulations)
 
         # Display results

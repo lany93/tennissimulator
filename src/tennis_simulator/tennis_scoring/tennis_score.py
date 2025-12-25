@@ -10,6 +10,13 @@ class TennisScore:
         player_1_score_index: int = 0,
         player_2_score_index: int = 0,
     ) -> None:
+        """Initialize the TennisScore object.
+
+        Args:
+            score (dict[str, Any] | None): Initial score dictionary.
+            player_1_score_index (int): Initial score index for player 1.
+            player_2_score_index (int): Initial score index for player 2.
+        """
         self.score = score or {
             "player_1": 0,
             "player_2": 0,
@@ -23,6 +30,8 @@ class TennisScore:
             "player_2_sets_won": 0,
             "player_1_total_points_won": 0,
             "player_2_total_points_won": 0,
+            "player_1_close_games_won": 0,  # e.g., points at 40-40, Advantage
+            "player_2_close_games_won": 0,  # e.g., points at 40-40, Advantage
         }
         self.score_map = [0, 15, 30, 40, "Advantage", "Game"]
         self.player_1_score_index = player_1_score_index
@@ -61,32 +70,42 @@ class TennisScore:
         if self._is_tiebreak():
             if player == "player_1":
                 self.score["player_1_tiebreak_points"] += 1
+                self.score["player_1_total_points_won"] += 1
             else:
                 self.score["player_2_tiebreak_points"] += 1
+                self.score["player_2_total_points_won"] += 1
         else:
             if self.score_map[self.player_1_score_index] == "Advantage":
                 if player == "player_1":
                     self.player_1_score_index += 1
+                    self.score["player_1_total_points_won"] += 1
                 elif player == "player_2":
                     self.player_1_score_index -= 1
+                    self.score["player_2_total_points_won"] += 1
             elif self.score_map[self.player_2_score_index] == "Advantage":
                 if player == "player_1":
                     self.player_2_score_index -= 1
+                    self.score["player_1_total_points_won"] += 1
                 elif player == "player_2":
                     self.player_2_score_index += 1
+                    self.score["player_2_total_points_won"] += 1
             else:
                 if player == "player_1":
                     self.player_1_score_index += 1
+                    self.score["player_1_total_points_won"] += 1
                 elif player == "player_2":
                     self.player_2_score_index += 1
+                    self.score["player_2_total_points_won"] += 1
                 else:
                     raise ValueError("Invalid player identifier")
 
             self.score["player_1"] = self.score_map[self.player_1_score_index]
             self.score["player_2"] = self.score_map[self.player_2_score_index]
 
-            # Update game and set after score change
+            # Update game in the case it is not a tiebreak
             self._update_game()
+
+        # Update set
         self._update_set()
 
     def _update_game(self) -> None:
